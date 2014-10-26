@@ -439,13 +439,13 @@
 {
     self = [super init];
     if (self == nil) { return self; }
-    [self initControllerWithTitle:title message:message preferredStyle:preferredStyle];
+    [self configureControllerWithTitle:title message:message preferredStyle:preferredStyle];
     return self;
 }
 
 #pragma mark Control
 
-- (void)initControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle
+- (void)configureControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle
 {
     if (NSClassFromString(@"UIAlertController") != nil) {
         self.alertController = [MISUIAlertController alertControllerWithTitle:title message:message preferredStyle:preferredStyle];
