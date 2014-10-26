@@ -43,8 +43,10 @@
     if (NSClassFromString(@"UIAlertController") != nil) {
         __weak typeof(self) weakSelf = self;
         self.alertAction = [UIAlertAction actionWithTitle:title style:style handler:^(UIAlertAction *alertAction) {
-            __strong typeof (self) strongSelf = weakSelf;
-            handler(strongSelf);
+            __strong typeof (weakSelf) strongSelf = weakSelf;
+            if (handler) {
+                handler(strongSelf);
+            }
         }];
     }
     
