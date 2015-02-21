@@ -9,7 +9,7 @@ MISAlertController uses ARC and supports iOS 7.0+
 
 ## Installing
 
-MISAlertController can be installed by [CocoaPods](www.cocoapods.org). Simply add this line to your `Podfile`:
+MISAlertController can be installed by [CocoaPods](http://cocoapods.org). Simply add this line to your `Podfile`:
 ````
 pod 'MISAlertController'
 ````
