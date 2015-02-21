@@ -25,6 +25,8 @@
 - (void)showInViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)showFromSourceView:(UIView *)sourceView inViewController:(UIViewController *)viewController animated:(BOOL)animated;
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion;
+
 @end
 
 

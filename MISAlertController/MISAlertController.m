@@ -310,6 +310,22 @@
     }
 }
 
+#pragma mark Hide
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    id control = self.control;
+    
+    if ([control respondsToSelector:@selector(dismissWithClickedButtonIndex:animated:)] &&
+        [control respondsToSelector:@selector(isVisible)] && [control isVisible]) {
+        [control dismissWithClickedButtonIndex:-1 animated:YES];
+    }
+    
+    if (completion) {
+        completion();
+    }
+}
+
 @end
 
 
@@ -479,6 +495,19 @@
     [alertController showFromSourceView:sourceView inViewController:viewController animated:animated];
 }
 
+#pragma mark Hide Alert Controller
+
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    if (self.alertController) {
+        [self.alertController dismissViewControllerAnimated:flag completion:completion];
+    } else {
+        // If alertController is already dismissed just call completion block
+        if (completion) {
+            completion();
+        }
+    }
+}
 
 #pragma mark Forwarding
 
