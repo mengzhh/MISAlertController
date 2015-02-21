@@ -360,7 +360,9 @@
 {
     // Add text field to alert view and return the text field to the configuration handler
     self.alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    configurationHandler([self.alertView textFieldAtIndex:0]);
+    if (configurationHandler) {
+        configurationHandler([self.alertView textFieldAtIndex:0]);
+    }
 }
 
 - (NSArray *)textFields
