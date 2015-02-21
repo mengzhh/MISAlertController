@@ -49,6 +49,15 @@ Show the controller
 [alertController showFromSourceView:sender inViewController:self animated:YES];
 ```
 
+
+Hide the controller
+
+```
+[alertController dismissViewControllerAnimated:YES completion:^{
+
+}];
+```
+
 In the sample project you will find how to show an alert view via MISAlertController.
 
 ## Creator
