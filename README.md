@@ -7,6 +7,17 @@ MISAlertController is a wrapper around UIAlertController and UIAlertView / UIAct
 
 MISAlertController uses ARC and supports iOS 7.0+
 
+## Installing
+
+MISAlertController can be installed by [CocoaPods](www.cocoapods.org). Simply add this line to your `Podfile`:
+````
+pod 'MISAlertController'
+````
+
+And run `pod install`.
+
+Or just add the files from the MISAlertController folder to your project.
+
 ## Usage
 
 First create a ``MISAlertController`` object
