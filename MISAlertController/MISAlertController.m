@@ -43,8 +43,10 @@
     if (NSClassFromString(@"UIAlertController") != nil) {
         __weak typeof(self) weakSelf = self;
         self.alertAction = [UIAlertAction actionWithTitle:title style:style handler:^(UIAlertAction *alertAction) {
-            __strong typeof (self) strongSelf = weakSelf;
-            handler(strongSelf);
+            __strong typeof (weakSelf) strongSelf = weakSelf;
+            if (handler) {
+                handler(strongSelf);
+            }
         }];
     }
     
@@ -166,8 +168,7 @@
 
 + (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle
 {
-    NSString *controlClassName = (preferredStyle == UIAlertControllerStyleActionSheet) ? @"MISAlertControllerActionSheetHelper" : @"MISAlertControllerAlertViewHelper";
-    MISAlertControllerHelper *helper = [NSClassFromString(controlClassName) new];
+    MISAlertControllerHelper *helper = (preferredStyle == UIAlertControllerStyleActionSheet) ? MISAlertControllerActionSheetHelper.new : MISAlertControllerAlertViewHelper.new;
     helper.title = title;
     helper.message = message;
     helper.preferredStyle = preferredStyle;
@@ -438,16 +439,19 @@
 {
     self = [super init];
     if (self == nil) { return self; }
-    [self initControllerWithTitle:title message:message preferredStyle:preferredStyle];
+    [self configureControllerWithTitle:title message:message preferredStyle:preferredStyle];
     return self;
 }
 
 #pragma mark Control
 
-- (void)initControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle
+- (void)configureControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle
 {
-    NSString *classNameForController = (NSClassFromString(@"UIAlertController") != nil ? @"MISUIAlertController" : @"MISAlertControllerHelper");
-    self.alertController = [NSClassFromString(classNameForController) alertControllerWithTitle:title message:message preferredStyle:preferredStyle];
+    if (NSClassFromString(@"UIAlertController") != nil) {
+        self.alertController = [MISUIAlertController alertControllerWithTitle:title message:message preferredStyle:preferredStyle];
+    } else {
+        self.alertController = [MISAlertControllerHelper alertControllerWithTitle:title message:message preferredStyle:preferredStyle];
+    }
 }
 
 #pragma mark Show Alert Controller
