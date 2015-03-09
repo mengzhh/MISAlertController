@@ -10,7 +10,7 @@
 
 Pod::Spec.new do |s|
   s.name         = 'MISAlertController'
-  s.version      = '1.0.0'
+  s.version      = '1.0.1'
   s.summary      = 'Add support for UIAlertController API to iOS7+. Uses UIAlertController (iOS 8+) and UIAlertView / UIAlertSheet (iOS 7) behind the scenes.'
   s.description  = <<-DESC
                     If you want to use UIAlertController, but still need to support iOS 7 this project is for you.
