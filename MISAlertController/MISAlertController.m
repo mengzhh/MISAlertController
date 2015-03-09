@@ -13,13 +13,9 @@
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) UIAlertActionStyle style;
 @property (nonatomic, copy) void (^handler)(MISAlertAction *action);
-
-@property (nonatomic, strong) UIAlertAction *alertAction;
 @end
 
 @implementation MISAlertAction
-
-@synthesize enabled = _enabled;
 
 #pragma mark Class
 
@@ -39,16 +35,6 @@
     _title = title;
     _style = style;
     _handler = handler;
-
-    if (NSClassFromString(@"UIAlertController") != nil) {
-        __weak typeof(self) weakSelf = self;
-        self.alertAction = [UIAlertAction actionWithTitle:title style:style handler:^(UIAlertAction *alertAction) {
-            __strong typeof (weakSelf) strongSelf = weakSelf;
-            if (handler) {
-                handler(strongSelf);
-            }
-        }];
-    }
     
     return self;
 }
@@ -59,20 +45,7 @@
     alertAction.title = self.title;
     alertAction.style = self.style;
     alertAction.handler = self.handler;
-    alertAction.alertAction = self.alertAction;
     return alertAction;
-}
-
-
-#pragma mark Setter
-
-- (void)setEnabled:(BOOL)enabled
-{
-    _enabled = enabled;
-    
-    if (self.alertAction != nil) {
-        self.alertAction.enabled = enabled;
-    }
 }
 
 @end
@@ -99,14 +72,16 @@
 
 #pragma mark UIAlertController
 
-- (void)addAction:(UIAlertAction *)action
+- (void)addAction:(MISAlertAction *)action
 {
-    if ([action isKindOfClass:MISAlertAction.class]) {
-        [super addAction:[(MISAlertAction *)action alertAction]];
-        return;
-    }
+    NSAssert([action isKindOfClass:MISAlertAction.class], @"Must be of type MISAlertAction");
     
-    [super addAction:action];
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:action.title style:(UIAlertActionStyle)action.style handler:^(UIAlertAction *uiAction) {
+        if (action.handler) {
+            action.handler(action);
+        }
+    }];
+    [super addAction:alertAction];
 }
 
 #pragma mark Show
